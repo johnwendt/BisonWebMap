@@ -11,6 +11,12 @@ obs <- read.csv("obsBisonShiny.csv")
 
 ui <- fluidPage(
   
+  h1("Bison sites"),
+  tags$p("This is a",
+         tags$strong("Shiny"),
+         "app."),
+  a(href = "johnwendt.github.io", "johnwendt.github.io"),
+  
   leafletOutput('map', width = "60%", height = "600px"),
   p(),
   sliderInput(inputId = 'age',
