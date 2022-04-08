@@ -11,19 +11,37 @@ obs <- read.csv("obsBisonShiny.csv")
 
 ui <- fluidPage(
   
-  h1("Bison sites"),
-  tags$p("This is a",
-         tags$strong("Shiny"),
-         "app."),
-  a(href = "johnwendt.github.io", "johnwendt.github.io"),
+  titlePanel(h1(tags$i("Bison "),"in the fossil record")),
+  titlePanel(h5("20,000 - 0 calendar years before present")),
+  titlePanel(h5("Explore the distribution of bison through time.")),
   
-  leafletOutput('map', width = "60%", height = "600px"),
-  p(),
-  sliderInput(inputId = 'age',
-              label = 'Site Age',
-              value = c(0, 20000), min = 0, max = 20000),
-  actionButton(inputId = "agebound",
-               label = "Search")
+  sidebarLayout(position = "left",
+                sidebarPanel(sliderInput(inputId = 'age',
+                                         label = 'Site Age',
+                                         value = c(0, 20000), min = 0, max = 20000
+                                         ),
+                             
+                             actionButton(inputId = "agebound",
+                                          label = "Search"
+                                          ),
+                             
+                             #p(
+                             #  br(),
+                             #  "Read the paper: ",
+                             #  a(href = "", "")
+                             #  ),
+                             
+                             p(
+                                br(),
+                               a(href = "https://johnwendt.github.io", "johnwendt.github.io"))
+                             ),
+                
+                mainPanel(leafletOutput('map', width = "100%", height = "600px"))),
+  
+  #tags$p("This is a",
+  #       tags$strong("Shiny"),
+  #       "app."),
+
 )
 
 server <- function(input, output, session) {
