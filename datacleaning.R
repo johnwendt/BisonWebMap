@@ -28,4 +28,4 @@ obs$label <- paste(sep = "<br/>",
       paste0("</center>")
       )
 
-write.csv(obs, "obsBisonShiny.csv")
+write.csv(obs, "obsBisonShiny.csv", row.names = FALSE)
