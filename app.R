@@ -11,19 +11,25 @@ obs <- read.csv("obsBisonShiny.csv")
 
 ui <- fluidPage(
   
-  titlePanel(h1(tags$i("Bison "),"in the fossil record")),
-  titlePanel(h5("20,000 - 0 calendar years before present")),
+  titlePanel(h1(tags$strong("Bison in the fossil record"))),
   titlePanel(h5("Explore the distribution of bison through time.")),
+  hr(),
   
   sidebarLayout(position = "left",
                 sidebarPanel(sliderInput(inputId = 'age',
-                                         label = 'Site Age',
+                                         label = 'Site age (cal yr BP)',
                                          value = c(0, 20000), min = 0, max = 20000
                                          ),
                              
+                             # Search age range button
                              actionButton(inputId = "agebound",
                                           label = "Search"
                                           ),
+                             
+                             # Download data button
+                             downloadButton("downloadData", 
+                                            "Download"
+                                            ),
                              
                              #p(
                              #  br(),
@@ -36,7 +42,9 @@ ui <- fluidPage(
                                a(href = "https://johnwendt.github.io", "johnwendt.github.io"))
                              ),
                 
-                mainPanel(leafletOutput('map', width = "100%", height = "600px"))),
+                mainPanel(leafletOutput('map', width = "100%", height = "600px"),
+                          a(href = "https://johnwendt.github.io", "johnwendt.github.io"))),
+  
   
   #tags$p("This is a",
   #       tags$strong("Shiny"),
@@ -51,14 +59,18 @@ server <- function(input, output, session) {
     obs[obs$Lower.Age..IntCal20. >= input$age[1] & obs$Upper.Age..IntCal20. <= input$age[2],]
   })
   
+  filteredDataDownload <- reactive({
+    obs[obs$Lower.Age..IntCal20. >= input$age[1] & obs$Upper.Age..IntCal20. <= input$age[2], -27]
+  })
+  
   # Show starting map
   output$map <- renderLeaflet({
     leaflet(data=obs) %>% 
-      addProviderTiles(providers$OpenStreetMap.Mapnik) %>% # Add basemap
+      addProviderTiles(providers$OpenStreetMap.Mapnik) %>% # Add base map
       addCircleMarkers(~Longitude, ~Latitude, radius = 1.5, popup = ~label)
   })
   
-  # Map updates on click
+  # Map updates on click of 'Search' button
   observeEvent(input$agebound, {
     print(input$age)
     print(head(filteredData()))
@@ -66,6 +78,21 @@ server <- function(input, output, session) {
       clearMarkers() %>% 
       addCircleMarkers(~Longitude, ~Latitude, radius = 1.5, popup = ~label)
   })
+  
+  # Table of selected data set
+  output$table <- renderTable({
+    filteredDataDownload()
+  })
+  
+  # Downloadable csv of selected data set
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste0("bison_ocurrences_", input$age[1], "-", input$age[2], ".csv")
+      },
+    content = function(file) {
+      write.csv(filteredDataDownload(), file, row.names = FALSE)
+    }
+  )
   
 }
 
