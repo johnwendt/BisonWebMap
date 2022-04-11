@@ -1,16 +1,16 @@
 library(leaflet)
 library(dplyr)
-#library(htmltools)
 library(rstudioapi)
 library(shiny)
+library(shinythemes)
 library(rsconnect)
-
-#setwd(dirname(getActiveDocumentContext()$path)) # Set working directory to source file location
 
 obs <- read.csv("obsBisonShiny.csv")
 
 ui <- fluidPage(
   
+  #theme = shinytheme("united"),
+  tags$head(HTML("<title>Bison Web Map</title>")),
   titlePanel(h1(tags$strong("Bison in the fossil record"))),
   titlePanel(h5("Explore the distribution of bison through time.")),
   hr(),
@@ -29,26 +29,20 @@ ui <- fluidPage(
                              # Download data button
                              downloadButton("downloadData", 
                                             "Download"
-                                            ),
-                             
-                             #p(
-                             #  br(),
-                             #  "Read the paper: ",
-                             #  a(href = "", "")
-                             #  ),
-                             
-                             p(
-                                br(),
-                               a(href = "https://johnwendt.github.io", "johnwendt.github.io"))
-                             ),
+                                            )),
+
+                # Main map
+                mainPanel(leafletOutput('map', width = "100%", height = "600px"))),
+
                 
-                mainPanel(leafletOutput('map', width = "100%", height = "600px"),
-                          a(href = "https://johnwendt.github.io", "johnwendt.github.io"))),
-  
-  
-  #tags$p("This is a",
-  #       tags$strong("Shiny"),
-  #       "app."),
+  hr(),
+  fluidRow(
+    column(3, 
+           p("Creator: ", a(href = "https://johnwendt.github.io", "John Wendt")),
+           p("Data: ", a(href = "https://www.neotomadb.org/", "Neotoma"), "and ", a(href = "https://www.canadianarchaeology.ca/", "CARD")),
+           p("Code: ", a(href = "https://github.com/johnwendt/BisonWebMap", "Github"))
+           )
+  )
 
 )
 
