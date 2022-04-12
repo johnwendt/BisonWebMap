@@ -2,17 +2,17 @@ library(leaflet)
 library(dplyr)
 library(rstudioapi)
 library(shiny)
-library(shinythemes)
+#library(shinythemes) # broken
 library(rsconnect)
 
 obs <- read.csv("obsBisonShiny.csv")
 
 ui <- fluidPage(
   
-  #theme = shinytheme("united"),
+  #theme = shinytheme("united"), # shinythemes is broken
   tags$head(HTML("<title>Bison Web Map</title>")),
-  titlePanel(h1(tags$strong("Bison in the fossil record"))),
-  titlePanel(h5("Explore the distribution of bison through time.")),
+  titlePanel(h1(tags$strong("Explore bison ocurrences through time"))),
+  #titlePanel(h5("Explore the distribution of bison through time.")),
   hr(),
   
   sidebarLayout(position = "left",
