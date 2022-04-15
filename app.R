@@ -48,13 +48,17 @@ ui <- fluidPage(
 
 server <- function(input, output, session) {
   
-  # Reactive expression for the data subsetted to what the user selected
+  # Reactive expression for the data subsetted to user selection
   filteredData <- reactive({
-    obs[obs$Lower.Age..IntCal20. >= input$age[1] & obs$Upper.Age..IntCal20. <= input$age[2],]
+    #obs[obs$Lower.Age..IntCal20. >= input$age[1] & obs$Upper.Age..IntCal20. <= input$age[2],]
+    obs[pmin(obs$Lower.Age..IntCal20., obs$Upper.Age..IntCal20.) <= pmax(input$age[1], input$age[2]) &
+        pmax(obs$Lower.Age..IntCal20., obs$Upper.Age..IntCal20.) >= pmin(input$age[1], input$age[2]),]
   })
   
   filteredDataDownload <- reactive({
-    obs[obs$Lower.Age..IntCal20. >= input$age[1] & obs$Upper.Age..IntCal20. <= input$age[2], -27]
+    # obs[obs$Lower.Age..IntCal20. >= input$age[1] & obs$Upper.Age..IntCal20. <= input$age[2], -27]
+    obs[pmin(obs$Lower.Age..IntCal20., obs$Upper.Age..IntCal20.) <= pmax(input$age[1], input$age[2]) &
+          pmax(obs$Lower.Age..IntCal20., obs$Upper.Age..IntCal20.) >= pmin(input$age[1], input$age[2]), -27]
   })
   
   # Show starting map
