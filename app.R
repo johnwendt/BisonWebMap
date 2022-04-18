@@ -40,7 +40,8 @@ ui <- fluidPage(
     column(3, 
            p("Creator: ", a(href = "https://johnwendt.github.io", "John Wendt")),
            p("Data: ", a(href = "https://www.neotomadb.org/", "Neotoma"), "and ", a(href = "https://www.canadianarchaeology.ca/", "CARD")),
-           p("Code: ", a(href = "https://github.com/johnwendt/BisonWebMap", "Github"))
+           p("Code: ", a(href = "https://github.com/johnwendt/BisonWebMap", "Github")),
+           p("Read the ", a(href = "https://doi.org/10.1016/j.quascirev.2022.107472", "paper"))
            )
   )
 
@@ -50,13 +51,11 @@ server <- function(input, output, session) {
   
   # Reactive expression for the data subsetted to user selection
   filteredData <- reactive({
-    #obs[obs$Lower.Age..IntCal20. >= input$age[1] & obs$Upper.Age..IntCal20. <= input$age[2],]
     obs[pmin(obs$Lower.Age..IntCal20., obs$Upper.Age..IntCal20.) <= pmax(input$age[1], input$age[2]) &
         pmax(obs$Lower.Age..IntCal20., obs$Upper.Age..IntCal20.) >= pmin(input$age[1], input$age[2]),]
   })
   
   filteredDataDownload <- reactive({
-    # obs[obs$Lower.Age..IntCal20. >= input$age[1] & obs$Upper.Age..IntCal20. <= input$age[2], -27]
     obs[pmin(obs$Lower.Age..IntCal20., obs$Upper.Age..IntCal20.) <= pmax(input$age[1], input$age[2]) &
           pmax(obs$Lower.Age..IntCal20., obs$Upper.Age..IntCal20.) >= pmin(input$age[1], input$age[2]), -27]
   })
