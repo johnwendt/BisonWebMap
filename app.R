@@ -64,7 +64,7 @@ server <- function(input, output, session) {
   output$map <- renderLeaflet({
     leaflet(data=obs) %>% 
       addProviderTiles(providers$OpenStreetMap.Mapnik) %>% # Add base map
-      addCircleMarkers(~Longitude, ~Latitude, radius = 1.5, popup = ~label)
+      addCircleMarkers(~Longitude, ~Latitude, radius = 1.75, popup = ~label)
   })
   
   # Map updates on click of 'Search' button
@@ -73,7 +73,7 @@ server <- function(input, output, session) {
     print(head(filteredData()))
     leafletProxy("map", data = filteredData()) %>% 
       clearMarkers() %>% 
-      addCircleMarkers(~Longitude, ~Latitude, radius = 1.5, popup = ~label)
+      addCircleMarkers(~Longitude, ~Latitude, radius = 1.75, popup = ~label)
   })
   
   # Table of selected data set
