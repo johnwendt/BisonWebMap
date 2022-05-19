@@ -11,7 +11,7 @@ ui <- fluidPage(
   
   #theme = shinytheme("united"), # shinythemes is broken
   tags$head(HTML("<title>Bison Web Map</title>")),
-  titlePanel(h1(tags$strong("Explore bison ocurrences through time"))),
+  titlePanel(h1(tags$strong("Explore bison occurrences through time"))),
   #titlePanel(h5("Explore the distribution of bison through time.")),
   hr(),
   
@@ -84,7 +84,7 @@ server <- function(input, output, session) {
   # Downloadable csv of selected data set
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste0("bison_ocurrences_", input$age[1], "-", input$age[2], ".csv")
+      paste0("bison_occurrences_", input$age[1], "-", input$age[2], ".csv")
       },
     content = function(file) {
       write.csv(filteredDataDownload(), file, row.names = FALSE)

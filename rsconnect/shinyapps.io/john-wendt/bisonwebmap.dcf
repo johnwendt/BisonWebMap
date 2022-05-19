@@ -5,7 +5,7 @@ account: john-wendt
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 6049821
-bundleId: 5780322
+bundleId: 5818783
 url: https://john-wendt.shinyapps.io/bisonwebmap/
-when: 1649459409.10945
-lastSyncTime: 1649459409.10945
+when: 1650472511.66168
+lastSyncTime: 1650472511.66168
