@@ -38,7 +38,7 @@ ui <- fluidPage(
   hr(),
   fluidRow(
     column(3, 
-           p("Creator: ", a(href = "https://johnwendt.github.io", "John Wendt")),
+           p("Creator: ", a(href = "https://www.johnafwendt.com/", "John Wendt")),
            p("Data: ", a(href = "https://www.neotomadb.org/", "Neotoma"), "and ", a(href = "https://www.canadianarchaeology.ca/", "CARD")),
            p("Code: ", a(href = "https://github.com/johnwendt/BisonWebMap", "Github")),
            p("Read the ", a(href = "https://doi.org/10.1016/j.quascirev.2022.107472", "paper"))
